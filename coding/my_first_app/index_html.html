@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKKILO | 个人网站</title>
+    <style>
+        :root {
+            --primary: #5AC8C8;
+            --primary-dark: #3AA8A8;
+            --primary-light: #7EDADA;
+            --primary-glow: rgba(90, 200, 200, 0.3);
+            --bg: #0A0A0A;
+            --bg-secondary: #111111;
+            --bg-card: #161616;
+            --text: #FAFAFA;
+            --text-secondary: #8A8A8A;
+            --text-muted: #4A4A4A;
+            --white: #FFFFFF;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 40px rgba(90, 200, 200, 0.15);
+            --radius: 16px;
+            --radius-lg: 24px;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* SVG Definitions */
+        .svg-defs {
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(90, 200, 200, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .menu-toggle span {
+            width: 24px;
+            height: 1px;
+            background: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 50% 0%, #151515 0%, var(--bg) 60%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        /* Floating Daisies */
+        .daisy {
+            position: absolute;
+            opacity: 0.15;
+            animation: daisyFloat 25s ease-in-out infinite;
+        }
+
+        .daisy-1 {
+            width: 120px;
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .daisy-2 {
+            width: 80px;
+            top: 60%;
+            left: 5%;
+            animation-delay: -5s;
+            opacity: 0.1;
+        }
+
+        .daisy-3 {
+            width: 100px;
+            top: 20%;
+            right: 15%;
+            animation-delay: -10s;
+        }
+
+        .daisy-4 {
+            width: 60px;
+            top: 70%;
+            right: 8%;
+            animation-delay: -15s;
+            opacity: 0.1;
+        }
+
+        .daisy-5 {
+            width: 90px;
+            bottom: 15%;
+            left: 20%;
+            animation-delay: -8s;
+        }
+
+        .daisy-6 {
+            width: 70px;
+            bottom: 20%;
+            right: 20%;
+            animation-delay: -12s;
+            opacity: 0.12;
+        }
+
+        @keyframes daisyFloat {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, -20px) rotate(5deg);
+            }
+            50% {
+                transform: translate(-15px, 15px) rotate(-3deg);
+            }
+            75% {
+                transform: translate(10px, 25px) rotate(2deg);
+            }
+        }
+
+        /* Gradient Orbs */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: orbFloat 30s ease-in-out infinite;
+        }
+
+        .hero-orb-1 {
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(90, 200, 200, 0.08) 0%, transparent 70%);
+            top: -300px;
+            right: -200px;
+        }
+
+        .hero-orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(90, 200, 200, 0.05) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.95);
+            }
+        }
+
+        /* Grid Pattern */
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(90, 200, 200, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(90, 200, 200, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            padding: 120px 24px;
+        }
+
+        .hero-avatar {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .hero-avatar svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 30px rgba(90, 200, 200, 0.3));
+        }
+
+        .hero h1 {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-size: clamp(36px, 7vw, 64px);
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 50%, var(--text) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 5s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 2.5vw, 20px);
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-out-expo);
+            cursor: pointer;
+            border: none;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--bg);
+            box-shadow: 0 0 30px rgba(90, 200, 200, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px rgba(90, 200, 200, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--text-muted);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--text);
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 16px auto 0;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-secondary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-graphic {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-graphic-main {
+            width: 280px;
+            height: 280px;
+        }
+
+        .about-graphic svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 40px rgba(90, 200, 200, 0.2));
+        }
+
+        .about-graphic-ring {
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border: 1px solid rgba(90, 200, 200, 0.2);
+            border-radius: 50%;
+            animation: ringRotate 30s linear infinite;
+        }
+
+        .about-graphic-ring::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        @keyframes ringRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .about-text h3 {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .about-text p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .skill-tag {
+            padding: 8px 18px;
+            background: rgba(90, 200, 200, 0.1);
+            border: 1px solid rgba(90, 200, 200, 0.2);
+            color: var(--primary);
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--primary);
+            color: var(--bg);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(90, 200, 200, 0.4);
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            background: var(--bg);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .portfolio-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s var(--ease-out-expo);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+        }
+
+        .portfolio-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(90, 200, 200, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(90, 200, 200, 0.1);
+        }
+
+        .portfolio-graphic {
+            aspect-ratio: 16/10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-graphic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(90, 200, 200, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(90, 200, 200, 0.08) 0%, transparent 40%);
+        }
+
+        .portfolio-graphic svg {
+            width: 64px;
+            height: 64px;
+            opacity: 0.6;
+            transition: all 0.4s ease;
+        }
+
+        .portfolio-card:hover .portfolio-graphic svg {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .portfolio-info {
+            padding: 24px;
+        }
+
+        .portfolio-category {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-title {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .portfolio-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--bg-secondary);
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .contact-info p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .contact-method:hover {
+            border-color: rgba(90, 200, 200, 0.3);
+            transform: translateX(8px);
+            background: rgba(90, 200, 200, 0.05);
+        }
+
+        .contact-method-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(90, 200, 200, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .contact-method-text span {
+            display: block;
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .contact-method-text strong {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .contact-form {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg);
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+            color: var(--text);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(90, 200, 200, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px 32px;
+            background: var(--primary);
+            color: var(--bg);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+            letter-spacing: 0.5px;
+        }
+
+        .form-submit:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(90, 200, 200, 0.3);
+        }
+
+        .form-success {
+            display: none;
+            padding: 14px;
+            background: rgba(90, 200, 200, 0.1);
+            border: 1px solid rgba(90, 200, 200, 0.3);
+            color: var(--primary);
+            border-radius: var(--radius);
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+        }
+
+        .form-success.show {
+            display: block;
+            animation: fadeInUp 0.5s var(--ease-out-expo);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg);
+            color: var(--text);
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .footer-logo span {
+            color: var(--primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .about-graphic {
+                order: -1;
+            }
+
+            .about-graphic-main {
+                width: 220px;
+                height: 220px;
+            }
+
+            .about-graphic-ring {
+                width: 280px;
+                height: 280px;
+            }
+
+            .skills {
+                justify-content: center;
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 80px 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 24px;
+                gap: 24px;
+                border-bottom: 1px solid rgba(90, 200, 200, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s var(--ease-out-expo);
+            }
+
+            .nav-links.open {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .hero-avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .contact-form {
+                padding: 24px;
+            }
+
+            .daisy {
+                display: none;
+            }
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s var(--ease-out-expo);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG Definitions -->
+    <svg class="svg-defs">
+        <defs>
+            <!-- Daisy SVG -->
+            <g id="daisy-icon">
+                <ellipse cx="50" cy="30" rx="8" ry="20" fill="#5AC8C8" opacity="0.9"/>
+                <ellipse cx="50" cy="30" rx="8" ry="20" fill="#5AC8C8" opacity="0.9" transform="rotate(45 50 50)"/>
+                <ellipse cx="50" cy="30" rx="8" ry="20" fill="#5AC8C8" opacity="0.9" transform="rotate(90 50 50)"/>
+                <ellipse cx="50" cy="30" rx="8" ry="20" fill="#5AC8C8" opacity="0.9" transform="rotate(135 50 50)"/>
+                <ellipse cx="50" cy="30" rx="8" ry="20" fill="#5AC8C8" opacity="0.9" transform="rotate(180 50 50)"/>
+                <ellipse cx="50" cy="30" rx="8" ry="20" fill="#5AC8C8" opacity="0.9" transform="rotate(225 50 50)"/>
+                <ellipse cx="50" cy="30" rx="8" ry="20" fill="#5AC8C8" opacity="0.9" transform="rotate(270 50 50)"/>
+                <ellipse cx="50" cy="30" rx="8" ry="20" fill="#5AC8C8" opacity="0.9" transform="rotate(315 50 50)"/>
+                <circle cx="50" cy="50" r="12" fill="#1A1A2E"/>
+                <circle cx="46" cy="46" r="2" fill="#5AC8C8" opacity="0.5"/>
+                <circle cx="54" cy="46" r="2" fill="#5AC8C8" opacity="0.5"/>
+                <circle cx="50" cy="52" r="1.5" fill="#5AC8C8" opacity="0.5"/>
+                <path d="M50 62 Q45 75 50 85 Q55 75 50 62" fill="#5AC8C8" opacity="0.3"/>
+            </g>
+            
+            <!-- Small Daisy -->
+            <g id="daisy-small">
+                <ellipse cx="25" cy="15" rx="4" ry="10" fill="#5AC8C8" opacity="0.8"/>
+                <ellipse cx="25" cy="15" rx="4" ry="10" fill="#5AC8C8" opacity="0.8" transform="rotate(45 25 25)"/>
+                <ellipse cx="25" cy="15" rx="4" ry="10" fill="#5AC8C8" opacity="0.8" transform="rotate(90 25 25)"/>
+                <ellipse cx="25" cy="15" rx="4" ry="10" fill="#5AC8C8" opacity="0.8" transform="rotate(135 25 25)"/>
+                <ellipse cx="25" cy="15" rx="4" ry="10" fill="#5AC8C8" opacity="0.8" transform="rotate(180 25 25)"/>
+                <ellipse cx="25" cy="15" rx="4" ry="10" fill="#5AC8C8" opacity="0.8" transform="rotate(225 25 25)"/>
+                <ellipse cx="25" cy="15" rx="4" ry="10" fill="#5AC8C8" opacity="0.8" transform="rotate(270 25 25)"/>
+                <ellipse cx="25" cy="15" rx="4" ry="10" fill="#5AC8C8" opacity="0.8" transform="rotate(315 25 25)"/>
+                <circle cx="25" cy="25" r="6" fill="#1A1A2E"/>
+            </g>
+
+            <!-- Portfolio Icons -->
+            <g id="icon-music">
+                <circle cx="32" cy="32" r="28" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <circle cx="32" cy="32" r="8" fill="#5AC8C8"/>
+                <path d="M32 4 L32 16" stroke="#5AC8C8" stroke-width="2"/>
+                <path d="M32 48 L32 60" stroke="#5AC8C8" stroke-width="2"/>
+            </g>
+            <g id="icon-cart">
+                <rect x="8" y="20" width="32" height="24" rx="4" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <circle cx="20" cy="44" r="4" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <circle cx="44" cy="44" r="4" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <path d="M12 16 L16 8 L44 8" stroke="#5AC8C8" stroke-width="2" fill="none"/>
+            </g>
+            <g id="icon-ai">
+                <rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <circle cx="24" cy="26" r="8" fill="#5AC8C8" opacity="0.3"/>
+                <circle cx="40" cy="26" r="8" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <circle cx="32" cy="42" r="6" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+            </g>
+            <g id="icon-social">
+                <circle cx="16" cy="20" r="8" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <circle cx="48" cy="20" r="8" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <circle cx="32" cy="48" r="8" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <path d="M16 28 L32 40 L48 28" stroke="#5AC8C8" stroke-width="2" fill="none"/>
+            </g>
+            <g id="icon-chart">
+                <rect x="8" y="8" width="48" height="48" rx="4" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <path d="M16 44 L16 24 L28 32 L40 16 L48 20" stroke="#5AC8C8" stroke-width="2" fill="none"/>
+            </g>
+            <g id="icon-blog">
+                <rect x="8" y="8" width="48" height="48" rx="4" fill="none" stroke="#5AC8C8" stroke-width="2"/>
+                <line x1="16" y1="20" x2="48" y2="20" stroke="#5AC8C8" stroke-width="2"/>
+                <line x1="16" y1="28" x2="40" y2="28" stroke="#5AC8C8" stroke-width="2"/>
+                <line x1="16" y1="36" x2="44" y2="36" stroke="#5AC8C8" stroke-width="2"/>
+            </g>
+        </defs>
+    </svg>
+
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">KKK<span>ILO</span></a>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#portfolio">作品</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <!-- Floating Daisies -->
+            <div class="daisy daisy-1">
+                <svg viewBox="0 0 100 100"><use href="#daisy-icon"/></svg>
+            </div>
+            <div class="daisy daisy-2">
+                <svg viewBox="0 0 50 50"><use href="#daisy-small"/></svg>
+            </div>
+            <div class="daisy daisy-3">
+                <svg viewBox="0 0 100 100"><use href="#daisy-icon"/></svg>
+            </div>
+            <div class="daisy daisy-4">
+                <svg viewBox="0 0 50 50"><use href="#daisy-small"/></svg>
+            </div>
+            <div class="daisy daisy-5">
+                <svg viewBox="0 0 100 100"><use href="#daisy-icon"/></svg>
+            </div>
+            <div class="daisy daisy-6">
+                <svg viewBox="0 0 50 50"><use href="#daisy-small"/></svg>
+            </div>
+            
+            <!-- Gradient Orbs -->
+            <div class="hero-orb hero-orb-1"></div>
+            <div class="hero-orb hero-orb-2"></div>
+            
+            <!-- Grid Pattern -->
+            <div class="hero-grid"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-avatar">
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="#5AC8C8" stroke-width="1" opacity="0.3"/>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#5AC8C8" stroke-width="1" opacity="0.2"/>
+                    <circle cx="50" cy="50" r="30" fill="#5AC8C8" opacity="0.15"/>
+                    <ellipse cx="50" cy="40" rx="15" ry="18" fill="#5AC8C8" opacity="0.4"/>
+                    <circle cx="42" cy="38" r="3" fill="#FAFAFA" opacity="0.8"/>
+                    <circle cx="58" cy="38" r="3" fill="#FAFAFA" opacity="0.8"/>
+                    <path d="M42 52 Q50 58 58 52" stroke="#5AC8C8" stroke-width="2" fill="none" opacity="0.6"/>
+                    <ellipse cx="35" cy="45" rx="8" ry="12" fill="#5AC8C8" opacity="0.25"/>
+                    <ellipse cx="65" cy="45" rx="8" ry="12" fill="#5AC8C8" opacity="0.25"/>
+                </svg>
+            </div>
+            <h1>你好，我是 <span>KKKILO</span></h1>
+            <p class="hero-subtitle">创意开发者 · 设计师 · 梦想家</p>
+            <div class="hero-buttons">
+                <a href="#portfolio" class="btn btn-primary">查看作品</a>
+                <a href="#contact" class="btn btn-secondary">联系我</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">About Me</span>
+                <h2 class="section-title">关于我</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-graphic reveal reveal-delay-1">
+                    <div class="about-graphic-ring"></div>
+                    <div class="about-graphic-main">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#5AC8C8" stroke-width="0.5" opacity="0.3"/>
+                            <circle cx="50" cy="50" r="35" fill="#5AC8C8" opacity="0.1"/>
+                            <path d="M50 15 L50 35 M50 65 L50 85 M15 50 L35 50 M65 50 L85 50" stroke="#5AC8C8" stroke-width="1" opacity="0.3"/>
+                            <path d="M50 15 L50 35 M50 65 L50 85 M15 50 L35 50 M65 50 L85 50" stroke="#5AC8C8" stroke-width="1" opacity="0.3" transform="rotate(45 50 50)"/>
+                            <circle cx="50" cy="50" r="20" fill="none" stroke="#5AC8C8" stroke-width="1.5" opacity="0.5"/>
+                            <circle cx="50" cy="50" r="8" fill="#5AC8C8" opacity="0.3"/>
+                            <circle cx="50" cy="50" r="3" fill="#5AC8C8"/>
+                            <g opacity="0.4">
+                                <ellipse cx="50" cy="25" rx="4" ry="8" fill="#5AC8C8"/>
+                                <ellipse cx="50" cy="25" rx="4" ry="8" fill="#5AC8C8" transform="rotate(60 50 50)"/>
+                                <ellipse cx="50" cy="25" rx="4" ry="8" fill="#5AC8C8" transform="rotate(120 50 50)"/>
+                                <ellipse cx="50" cy="25" rx="4" ry="8" fill="#5AC8C8" transform="rotate(180 50 50)"/>
+                                <ellipse cx="50" cy="25" rx="4" ry="8" fill="#5AC8C8" transform="rotate(240 50 50)"/>
+                                <ellipse cx="50" cy="25" rx="4" ry="8" fill="#5AC8C8" transform="rotate(300 50 50)"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="about-text reveal reveal-delay-2">
+                    <h3>用代码创造美好世界</h3>
+                    <p>我是一名热爱技术的开发者，专注于打造优雅、高效的数字产品。从用户体验到代码架构，我追求每一个细节的完美。我相信技术应该服务于人，让生活变得更简单、更美好。</p>
+                    <p>拥有多年全栈开发经验，擅长将创意转化为可用的产品。喜欢挑战新技术，也在不断学习成长的路上。</p>
+                    <div class="skills">
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">UI/UX</span>
+                        <span class="skill-tag">AI/ML</span>
+                        <span class="skill-tag">Cloud</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Portfolio</span>
+                <h2 class="section-title">精选作品</h2>
+                <p class="section-desc">每一个项目都是用心打造的艺术品</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <div class="portfolio-graphic">
+                        <svg viewBox="0 0 64 64"><use href="#icon-music"/></svg>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">Web 应用</div>
+                        <h3 class="portfolio-title">智能音乐播放器</h3>
+                        <p class="portfolio-desc">基于AI推荐算法的音乐播放平台，支持跨平台同步</p>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-graphic">
+                        <svg viewBox="0 0 64 64"><use href="#icon-cart"/></svg>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">全栈项目</div>
+                        <h3 class="portfolio-title">跨境电商平台</h3>
+                        <p class="portfolio-desc">支持多语言、多币种的电商解决方案</p>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-graphic">
+                        <svg viewBox="0 0 64 64"><use href="#icon-ai"/></svg>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">AI 应用</div>
+                        <h3 class="portfolio-title">AI图像处理工具</h3>
+                        <p class="portfolio-desc">基于深度学习的图像增强与风格迁移</p>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-graphic">
+                        <svg viewBox="0 0 64 64"><use href="#icon-social"/></svg>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">移动端</div>
+                        <h3 class="portfolio-title">社交媒体App</h3>
+                        <p class="portfolio-desc">实时互动分享平台，支持短视频与直播</p>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-graphic">
+                        <svg viewBox="0 0 64 64"><use href="#icon-chart"/></svg>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">数据产品</div>
+                        <h3 class="portfolio-title">数据可视化仪表板</h3>
+                        <p class="portfolio-desc">企业级数据分析与实时可视化平台</p>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-graphic">
+                        <svg viewBox="0 0 64 64"><use href="#icon-blog"/></svg>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">内容平台</div>
+                        <h3 class="portfolio-title">个人博客系统</h3>
+                        <p class="portfolio-desc">支持Markdown的静态博客，性能卓越</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Contact</span>
+                <h2 class="section-title">联系我</h2>
+                <p class="section-desc">有项目合作或其他需求，欢迎随时联系我</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info reveal reveal-delay-1">
+                    <h3>让我们一起创造精彩</h3>
+                    <p>无论你是想合作项目，还是仅仅想交个朋友，我都很乐意与你交流。</p>
+                    <div class="contact-methods">
+                        <a href="mailto:hello@kkkilo.com" class="contact-method">
+                            <div class="contact-method-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                    <path d="M22 6L12 13L2 6"/>
+                                </svg>
+                            </div>
+                            <div class="contact-method-text">
+                                <span>邮箱</span>
+                                <strong>hello@kkkilo.com</strong>
+                            </div>
+                        </a>
+                        <a href="https://github.com/kkkilo" target="_blank" class="contact-method">
+                            <div class="contact-method-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                                </svg>
+                            </div>
+                            <div class="contact-method-text">
+                                <span>GitHub</span>
+                                <strong>github.com/kkkilo</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="contact-method">
+                            <div class="contact-method-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                                </svg>
+                            </div>
+                            <div class="contact-method-text">
+                                <span>微信</span>
+                                <strong>KKKILO</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form reveal reveal-delay-2" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" name="name" placeholder="请输入你的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <input type="email" id="email" name="email" placeholder="请输入你的邮箱" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">消息</label>
+                        <textarea id="message" name="message" placeholder="请输入你想说的话..." required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">发送消息</button>
+                    <div class="form-success" id="formSuccess">消息已发送，我会尽快回复你！</div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="footer-logo">KKK<span>ILO</span></a>
+                <div class="footer-links">
+                    <a href="#home">首页</a>
+                    <a href="#about">关于</a>
+                    <a href="#portfolio">作品</a>
+                    <a href="#contact">联系</a>
+                </div>
+                <p class="footer-copy">© 2024 KKKILO. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.querySelector('nav');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinksContainer = document.querySelector('.nav-links');
+            const portfolioCards = document.querySelectorAll('.portfolio-card');
+            const contactForm = document.getElementById('contactForm');
+            const formSuccess = document.getElementById('formSuccess');
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+
+                // Update active nav link
+                let current = '';
+                const sections = document.querySelectorAll('section[id]');
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    if (window.scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                navLinksContainer.classList.toggle('open');
+            });
+
+            // Close mobile menu on link click
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    menuToggle.classList.remove('active');
+                    navLinksContainer.classList.remove('open');
+                });
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Scroll reveal animation
+            const revealElements = document.querySelectorAll('.reveal, .portfolio-card');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            revealElements.forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // Portfolio card staggered animation
+            portfolioCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+
+            // Contact form handling
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+
+                if (name && email && message) {
+                    // Simulate form submission
+                    const submitBtn = contactForm.querySelector('.form-submit');
+                    submitBtn.textContent = '发送中...';
+                    submitBtn.disabled = true;
+
+                    setTimeout(() => {
+                        contactForm.reset();
+                        submitBtn.textContent = '发送消息';
+                        submitBtn.disabled = false;
+                        formSuccess.classList.add('show');
+
+                        setTimeout(() => {
+                            formSuccess.classList.remove('show');
+                        }, 5000);
+                    }, 1500);
+                }
+            });
+
+            // Add parallax effect to daisies
+            window.addEventListener('mousemove', function(e) {
+                const daisies = document.querySelectorAll('.daisy');
+                const orbs = document.querySelectorAll('.hero-orb');
+                const x = (e.clientX / window.innerWidth - 0.5) * 15;
+                const y = (e.clientY / window.innerHeight - 0.5) * 15;
+
+                daisies.forEach((daisy, index) => {
+                    const depth = (index + 1) * 0.8;
+                    daisy.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
+                });
+
+                orbs.forEach((orb, index) => {
+                    const depth = (index + 1) * 0.5;
+                    orb.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

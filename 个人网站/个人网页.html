@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KILO | 插画师 & 平面设计师</title>
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --black-light: #1a1a1a;
+            --black-lighter: #2a2a2a;
+            --mint: #00d4aa;
+            --mint-light: #00ffcc;
+            --mint-glow: rgba(0, 212, 170, 0.3);
+            --white: #ffffff;
+            --gray: #888888;
+            --gray-dark: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-duration: 800ms;
+            scroll-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--mint);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--mint);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 60px;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--mint-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: 24px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero .tagline {
+            font-size: 18px;
+            color: var(--mint);
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .hero .age {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 8px 20px;
+            background: var(--black-lighter);
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--gray);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        #daisies-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        section {
+            padding: 120px 60px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-title span {
+            color: var(--mint);
+        }
+
+        .works {
+            background: var(--mint);
+            color: var(--black);
+        }
+
+        .works .section-title {
+            color: var(--black);
+        }
+
+        .works .section-title span {
+            color: var(--black-light);
+        }
+
+        .works .work-card {
+            background: var(--white);
+        }
+
+        .works .work-info h3 {
+            color: var(--black);
+        }
+
+        .works .work-info p {
+            color: var(--gray-dark);
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .work-card {
+            background: var(--black);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+        }
+
+        .work-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 212, 170, 0.15);
+        }
+
+        .work-image {
+            width: 100%;
+            height: 300px;
+            background: var(--black-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-image svg {
+            width: 120px;
+            height: 120px;
+            transition: transform 0.4s ease;
+        }
+
+        .work-card:hover .work-image svg {
+            transform: scale(1.1);
+        }
+
+        .work-info {
+            padding: 30px;
+        }
+
+        .work-info h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .work-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .about {
+            background: var(--mint);
+            color: var(--black);
+        }
+
+        .about .section-title {
+            color: var(--black);
+        }
+
+        .about .section-title span {
+            color: var(--black-light);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 20px;
+            color: var(--gray-dark);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .about .skill-tag {
+            background: var(--white);
+            border-color: var(--black);
+            color: var(--black);
+        }
+
+        .about .skill-tag:hover {
+            background: var(--black);
+            color: var(--mint);
+            border-color: var(--black);
+        }
+
+        .skills {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .skill-tag {
+            padding: 12px 24px;
+            background: var(--black-lighter);
+            border: 1px solid var(--gray-dark);
+            border-radius: 30px;
+            font-size: 14px;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--mint);
+            color: var(--mint);
+            box-shadow: 0 0 20px var(--mint-glow);
+        }
+
+        .contact {
+            background: var(--mint);
+            color: var(--black);
+            text-align: center;
+        }
+
+        .contact .section-title {
+            color: var(--black);
+        }
+
+        .contact .section-title span {
+            color: var(--black-light);
+        }
+
+        .contact-content p {
+            color: var(--gray-dark);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .contact .social-link {
+            background: var(--white);
+        }
+
+        .contact .social-link svg {
+            fill: var(--black);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-link:hover {
+            background: var(--mint);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--mint-glow);
+        }
+
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--white);
+            transition: fill 0.3s ease;
+        }
+
+        .social-link:hover svg {
+            fill: var(--black);
+        }
+
+        footer {
+            padding: 40px 60px;
+            text-align: center;
+            border-top: 1px solid var(--gray-dark);
+        }
+
+        footer p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        footer span {
+            color: var(--mint);
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-content {
+            background: var(--black-lighter);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--gray-dark);
+        }
+
+        .popup-overlay.active .popup-content {
+            transform: scale(1);
+        }
+
+        .popup-content h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .popup-content p {
+            font-size: 18px;
+            color: var(--mint);
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .popup-content input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--gray-dark);
+            border-radius: 10px;
+            background: var(--black);
+            color: var(--white);
+            font-size: 14px;
+            margin-bottom: 15px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .popup-content input:focus {
+            border-color: var(--mint);
+        }
+
+        .popup-content textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--gray-dark);
+            border-radius: 10px;
+            background: var(--black);
+            color: var(--white);
+            font-size: 14px;
+            margin-bottom: 15px;
+            outline: none;
+            resize: none;
+            height: 100px;
+            transition: border-color 0.3s ease;
+        }
+
+        .popup-content textarea:focus {
+            border-color: var(--mint);
+        }
+
+        .popup-content button {
+            padding: 12px 30px;
+            background: var(--mint);
+            color: var(--black);
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup-content button:hover {
+            background: var(--mint-light);
+            transform: translateY(-2px);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .popup-close:hover {
+            color: var(--white);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero .subtitle {
+                font-size: 18px;
+            }
+
+            section {
+                padding: 80px 30px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" class="logo">KILO</a>
+        <ul class="nav-links">
+            <li><a href="#works">作品</a></li>
+            <li><a href="#about">关于</a></li>
+            <li><a href="#contact">联系</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <canvas id="daisies-canvas"></canvas>
+        <div class="hero-content">
+            <h1>KILO</h1>
+            <p class="subtitle">插画师 · 平面设计师 · 文艺爱好者</p>
+            <p class="tagline">用画笔描绘世界的美好</p>
+            <span class="age">19岁</span>
+        </div>
+    </section>
+
+    <section class="works" id="works">
+        <h2 class="section-title reveal">精选<span>作品</span></h2>
+        <div class="works-grid">
+            <div class="work-card reveal">
+                <div class="work-image">
+                    <svg viewBox="0 0 100 100" fill="none">
+                        <circle cx="50" cy="50" r="40" stroke="#00d4aa" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="25" stroke="#00d4aa" stroke-width="1.5" opacity="0.6"/>
+                        <circle cx="50" cy="50" r="10" fill="#00d4aa"/>
+                        <path d="M50 10 L50 25" stroke="#00d4aa" stroke-width="2"/>
+                        <path d="M50 75 L50 90" stroke="#00d4aa" stroke-width="2"/>
+                        <path d="M10 50 L25 50" stroke="#00d4aa" stroke-width="2"/>
+                        <path d="M75 50 L90 50" stroke="#00d4aa" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="work-info">
+                    <h3>品牌视觉设计</h3>
+                    <p>为独立品牌打造独特视觉形象</p>
+                </div>
+            </div>
+            <div class="work-card reveal">
+                <div class="work-image">
+                    <svg viewBox="0 0 100 100" fill="none">
+                        <path d="M50 20 C30 40 30 60 50 80 C70 60 70 40 50 20" stroke="#00ffcc" stroke-width="2" fill="none"/>
+                        <ellipse cx="35" cy="45" rx="15" ry="20" stroke="#00ffcc" stroke-width="2" fill="none" transform="rotate(-30 35 45)"/>
+                        <ellipse cx="65" cy="45" rx="15" ry="20" stroke="#00ffcc" stroke-width="2" fill="none" transform="rotate(30 65 45)"/>
+                        <circle cx="50" cy="50" r="5" fill="#00ffcc"/>
+                    </svg>
+                </div>
+                <div class="work-info">
+                    <h3>商业插画</h3>
+                    <p>书籍、杂志、广告插图创作</p>
+                </div>
+            </div>
+            <div class="work-card reveal">
+                <div class="work-image">
+                    <svg viewBox="0 0 100 100" fill="none">
+                        <rect x="20" y="30" width="60" height="40" rx="5" stroke="#00d4aa" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="12" stroke="#00d4aa" stroke-width="2"/>
+                        <path d="M50 38 L50 44" stroke="#00d4aa" stroke-width="2"/>
+                        <path d="M50 56 L50 62" stroke="#00d4aa" stroke-width="2"/>
+                        <path d="M38 50 L44 50" stroke="#00d4aa" stroke-width="2"/>
+                        <path d="M56 50 L62 50" stroke="#00d4aa" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="work-info">
+                    <h3>UI/UX 设计</h3>
+                    <p>简洁现代的界面设计体验</p>
+                </div>
+            </div>
+            <div class="work-card reveal">
+                <div class="work-image">
+                    <svg viewBox="0 0 100 100" fill="none">
+                        <polygon points="50,15 61,40 88,40 66,55 75,82 50,65 25,82 34,55 12,40 39,40" stroke="#00ffcc" stroke-width="2" fill="none"/>
+                        <circle cx="50" cy="48" r="8" fill="#00ffcc" opacity="0.3"/>
+                        <circle cx="50" cy="48" r="4" fill="#00ffcc"/>
+                    </svg>
+                </div>
+                <div class="work-info">
+                    <h3>创意海报</h3>
+                    <p>充满艺术感的海报设计</p>
+                </div>
+            </div>
+            <div class="work-card reveal">
+                <div class="work-image">
+                    <svg viewBox="0 0 100 100" fill="none">
+                        <path d="M50 10 L60 35 L85 35 L65 50 L75 75 L50 60 L25 75 L35 50 L15 35 L40 35 Z" stroke="#00d4aa" stroke-width="2" fill="none"/>
+                        <circle cx="50" cy="45" r="6" fill="#00d4aa" opacity="0.5"/>
+                    </svg>
+                </div>
+                <div class="work-info">
+                    <h3>包装设计</h3>
+                    <p>产品包装与品牌视觉</p>
+                </div>
+            </div>
+            <div class="work-card reveal">
+                <div class="work-image">
+                    <svg viewBox="0 0 100 100" fill="none">
+                        <circle cx="35" cy="35" r="20" stroke="#00ffcc" stroke-width="2"/>
+                        <circle cx="65" cy="35" r="20" stroke="#00ffcc" stroke-width="2"/>
+                        <circle cx="50" cy="65" r="20" stroke="#00ffcc" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="8" fill="#00ffcc"/>
+                    </svg>
+                </div>
+                <div class="work-info">
+                    <h3>图案设计</h3>
+                    <p>个性化纹理与图案创作</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <h2 class="section-title reveal">关于<span>我</span></h2>
+        <div class="about-content reveal">
+            <p>我是KILO，一个热爱艺术的19岁女孩。我喜欢用画笔和设计讲述故事，用色彩表达情感。我相信艺术不仅仅是创作，更是一种与世界对话的方式。</p>
+            <div class="skills">
+                <span class="skill-tag">插画设计</span>
+                <span class="skill-tag">平面设计</span>
+                <span class="skill-tag">品牌设计</span>
+                <span class="skill-tag">UI/UX</span>
+                <span class="skill-tag">手绘</span>
+                <span class="skill-tag">数字绘画</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2 class="section-title reveal">联系<span>我</span></h2>
+        <div class="contact-content reveal">
+            <p>期待与您合作，一起创造美好的视觉作品</p>
+            <div class="social-links">
+                <div class="social-link" onclick="showPopup('wechat')">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.045c.134 0 .24-.11.24-.245 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156c0-.125.082-.232.192-.232.015 0 .03.002.043.005 1.539-1.133 2.511-2.78 2.511-4.704 0-3.037-2.571-5.545-5.932-5.545zm-2.198 4.127c.535 0 1.011.172 1.426.452-.205.457-.459.863-.777 1.229-.935-1.257-2.676-1.681-4.13-1.599-.088.005-.176.015-.262.03.295-.734.836-1.373 1.597-1.802.116-.067.237-.124.363-.174.03-.12.067-.237.107-.351.247-.07.506-.132.767-.183zm-6.32 2.792c1.295 0 2.53.47 3.533 1.258-.297.7-.683 1.286-1.158 1.772-.949.006-1.875-.29-2.771-.907-.536-.37-.969-.828-1.284-1.366.628-.457 1.395-.757 2.168-.757zm7.208 2.034c1.239-.004 2.415.364 3.352.988-.488.66-1.16 1.155-1.987 1.466a6.71 6.71 0 0 1-2.943.626 6.77 6.77 0 0 1-3.226-.78c.256-.457.538-.887.862-1.282 1.275-.08 2.542-.232 3.728-.568.176-.432.392-.848.631-1.248z"/>
+                    </svg>
+                </div>
+                <div class="social-link" onclick="showPopup('qq')">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2.5c1.93 0 3.68.7 5.04 1.85L15.5 8.5c-.5-.3-1.1-.5-1.7-.5-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5c2.49 0 4.5-2.01 4.5-4.5 0-.42-.07-.82-.18-1.2l1.62 1.62c.3.6.48 1.28.48 2.08 0 2.76-2.24 5-5 5s-5-2.24-5-5 2.24-5 5-5c1.02 0 1.98.31 2.79.83l-2.33 2.33C9.6 11.1 8.4 10.5 7.08 10.5c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5c2.49 0 4.5-2.01 4.5-4.5 0-.42-.07-.82-.18-1.2l1.62 1.62c.3.6.48 1.28.48 2.08 0 2.76-2.24 5-5 5s-5-2.24-5-5 2.24-5 5-5z"/>
+                    </svg>
+                </div>
+                <div class="social-link" onclick="showPopup('email')">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 <span>KILO</span> · 用心创作</p>
+    </footer>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content" id="popupContent">
+            <span class="popup-close" onclick="closePopup()">&times;</span>
+            <div id="popupInner"></div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('daisies-canvas');
+        const ctx = canvas.getContext('2d');
+        let daisies = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createDaisy() {
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 20 + 10,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.02,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                baseX: 0,
+                baseY: 0,
+                scatter: false,
+                scatterVx: 0,
+                scatterVy: 0
+            };
+        }
+
+        function initDaisies() {
+            daisies = [];
+            const count = Math.floor((canvas.width * canvas.height) / 15000);
+            for (let i = 0; i < count; i++) {
+                const daisy = createDaisy();
+                daisy.baseX = daisy.x;
+                daisy.baseY = daisy.y;
+                daisies.push(daisy);
+            }
+        }
+
+        function drawDaisy(daisy) {
+            ctx.save();
+            ctx.translate(daisy.x, daisy.y);
+            ctx.rotate(daisy.rotation);
+            ctx.globalAlpha = 0.6;
+
+            const petalCount = 8;
+            const petalLength = daisy.size;
+            const petalWidth = daisy.size * 0.4;
+
+            for (let i = 0; i < petalCount; i++) {
+                ctx.beginPath();
+                ctx.rotate((Math.PI * 2) / petalCount);
+                ctx.ellipse(0, petalLength / 2, petalWidth / 2, petalLength / 2, 0, 0, Math.PI * 2);
+                ctx.fillStyle = i % 2 === 0 ? '#00d4aa' : '#00ffcc';
+                ctx.fill();
+            }
+
+            ctx.beginPath();
+            ctx.arc(0, 0, daisy.size * 0.25, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function updateDaisies() {
+            const minDaisies = Math.floor((canvas.width * canvas.height) / 15000);
+            
+            daisies.forEach(daisy => {
+                if (daisy.scatter) {
+                    daisy.x += daisy.scatterVx;
+                    daisy.y += daisy.scatterVy;
+                    daisy.scatterVx *= 0.98;
+                    daisy.scatterVy *= 0.98;
+                    daisy.rotation += daisy.rotationSpeed * 2;
+
+                    if (Math.abs(daisy.scatterVx) < 0.1 && Math.abs(daisy.scatterVy) < 0.1) {
+                        daisy.scatter = false;
+                        daisy.vx = (Math.random() - 0.5) * 0.5;
+                        daisy.vy = -Math.random() * 0.3 - 0.2;
+                    }
+                } else {
+                    const dx = mouseX - daisy.x;
+                    const dy = mouseY - daisy.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const repelRadius = 150;
+
+                    if (distance < repelRadius) {
+                        const force = (repelRadius - distance) / repelRadius;
+                        const angle = Math.atan2(dy, dx);
+                        daisy.x -= Math.cos(angle) * force * 8;
+                        daisy.y -= Math.sin(angle) * force * 8;
+                        daisy.scatter = true;
+                        daisy.scatterVx = -Math.cos(angle) * force * 15;
+                        daisy.scatterVy = -Math.sin(angle) * force * 15;
+                    } else {
+                        daisy.vy -= 0.005;
+                        if (daisy.vy < -1) daisy.vy = -1;
+                        
+                        daisy.x += daisy.vx + Math.sin(Date.now() / 2000 + daisy.y * 0.01) * 0.3;
+                        daisy.y += daisy.vy;
+                        daisy.rotation += daisy.rotationSpeed;
+                    }
+                }
+
+                if (daisy.x < -50) daisy.x = canvas.width + 50;
+                if (daisy.x > canvas.width + 50) daisy.x = -50;
+                if (daisy.y < -50) daisy.y = canvas.height + 50;
+                if (daisy.y > canvas.height + 50) daisy.y = -50;
+            });
+
+            daisies.forEach(daisy => {
+                if (daisy.y > canvas.height + 30) {
+                    daisy.y = -30;
+                    daisy.x = Math.random() * canvas.width;
+                }
+            });
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        resizeCanvas();
+        initDaisies();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initDaisies();
+        });
+
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function checkReveal() {
+            revealElements.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const revealPoint = 150;
+
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkReveal);
+        checkReveal();
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 60;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced smooth scroll for mouse wheel
+        let isScrolling = false;
+        document.addEventListener('wheel', () => {
+            isScrolling = true;
+        }, { passive: true });
+
+        // Popup functions
+        function showPopup(type) {
+            const overlay = document.getElementById('popupOverlay');
+            const inner = document.getElementById('popupInner');
+            
+            if (type === 'wechat') {
+                inner.innerHTML = '<h3>微信联系方式</h3><p>kkkilo3688</p>';
+            } else if (type === 'qq') {
+                inner.innerHTML = '<h3>QQ联系方式</h3><p>1972437120</p>';
+            } else if (type === 'email') {
+                inner.innerHTML = `
+                    <h3>发送邮件</h3>
+                    <input type="text" id="emailSubject" placeholder="主题">
+                    <textarea id="emailBody" placeholder="请输入内容..."></textarea>
+                    <button onclick="sendEmail()">发送邮件</button>
+                `;
+            }
+            
+            overlay.classList.add('active');
+        }
+
+        function closePopup() {
+            document.getElementById('popupOverlay').classList.remove('active');
+        }
+
+        function sendEmail() {
+            const subject = document.getElementById('emailSubject').value;
+            const body = document.getElementById('emailBody').value;
+            const mailtoLink = `mailto:1972437120@qq.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+            closePopup();
+        }
+
+        document.getElementById('popupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        });
+
+        // Falling petals
+        let fallingPetals = [];
+
+        function createFallingPetal(x, y) {
+            return {
+                x: x,
+                y: y,
+                size: Math.random() * 8 + 5,
+                vx: (Math.random() - 0.5) * 4,
+                vy: Math.random() * 2 + 2,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.2,
+                opacity: 1,
+                color: Math.random() > 0.5 ? '#00d4aa' : '#00ffcc'
+            };
+        }
+
+        function drawFallingPetals() {
+            fallingPetals.forEach(petal => {
+                ctx.save();
+                ctx.translate(petal.x, petal.y);
+                ctx.rotate(petal.rotation);
+                ctx.globalAlpha = petal.opacity;
+                ctx.fillStyle = petal.color;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, petal.size, petal.size * 0.5, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+        }
+
+        function updateFallingPetals() {
+            fallingPetals = fallingPetals.filter(petal => {
+                petal.x += petal.vx;
+                petal.y += petal.vy;
+                petal.vy += 0.05;
+                petal.rotation += petal.rotationSpeed;
+                petal.opacity -= 0.008;
+                return petal.opacity > 0 && petal.y < canvas.height + 50;
+            });
+        }
+
+        // Click to scatter petals
+        canvas.addEventListener('click', (e) => {
+            const clickX = e.clientX;
+            const clickY = e.clientY;
+            
+            for (let i = 0; i < 8; i++) {
+                fallingPetals.push(createFallingPetal(clickX, clickY));
+            }
+            
+            daisies.forEach(daisy => {
+                const dx = daisy.x - clickX;
+                const dy = daisy.y - clickY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 100) {
+                    const force = (100 - distance) / 100;
+                    const angle = Math.atan2(dy, dx);
+                    daisy.scatter = true;
+                    daisy.scatterVx = Math.cos(angle) * force * 20;
+                    daisy.scatterVy = Math.sin(angle) * force * 20;
+                }
+            });
+        });
+
+        // Modified animate function
+        const originalAnimate = animate;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            daisies.forEach(drawDaisy);
+            drawFallingPetals();
+            updateDaisies();
+            updateFallingPetals();
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
